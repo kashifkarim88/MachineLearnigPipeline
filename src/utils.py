@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
+import dill
 
 def save_object(file_path, obj):
     """
