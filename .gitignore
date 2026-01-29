@@ -8,9 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-.artifacts
 build/
-mlenv/
 venv/
 develop-eggs/
 dist/
@@ -138,6 +136,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.mlenv
 .env
 .envrc
 .venv
