@@ -1,30 +1,26 @@
-import sys
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-import numpy as np
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
 from src.Pipeline.predict_pipeline import CustomData, PredictPipeline
 
-application = FastAPI()
-app = application
+# Create FastAPI app
+app = FastAPI()
 
-# Templates directory (same as Flask: templates/)
+# Templates folder
 templates = Jinja2Templates(directory="templates")
 
+# Load model and preprocessor once globally
+predict_pipeline = PredictPipeline()
 
-# Route for home page
+
+# Home route: GET displays form, POST predicts
 @app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse(
-        "index.html",
-        {"request": request}
-    )
+async def index_get(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/", response_class=HTMLResponse)
-async def predict_data_post(
+async def index_post(
     request: Request,
     gender: str = Form(...),
     ethnicity: str = Form(...),
@@ -34,25 +30,21 @@ async def predict_data_post(
     reading_score: float = Form(...),
     writing_score: float = Form(...)
 ):
+    # Prepare input data
     data = CustomData(
         gender=gender,
         race_ethnicity=ethnicity,
         parental_level_of_education=parental_level_of_education,
         lunch=lunch,
         test_preparation_course=test_preparation_course,
-        reading_score=reading_score,   
-        writing_score=writing_score 
+        reading_score=reading_score,
+        writing_score=writing_score
     )
 
     pred_df = data.get_data_as_data_frame()
-    print(pred_df)
-    print("Before Prediction")
-
-    predict_pipeline = PredictPipeline()
-    print("Mid Prediction")
     results = predict_pipeline.predict(pred_df)
-    print("After Prediction")
 
+    # Return the same template with results
     return templates.TemplateResponse(
         "index.html",
         {
@@ -60,4 +52,3 @@ async def predict_data_post(
             "results": results[0]
         }
     )
-    
