@@ -1,8 +1,8 @@
 import sys
+import os
 import pandas as pd
 from src.exception import CustomException
 from src.utils import load_object
-
 
 class PredictPipeline:
     # Singleton pattern: model & preprocessor loaded once
@@ -12,9 +12,16 @@ class PredictPipeline:
     def __init__(self):
         try:
             if PredictPipeline._model is None or PredictPipeline._preprocessor is None:
-                print("Loading preprocessor and model...")  # debug log
-                PredictPipeline._preprocessor = load_object("artifacts/preprocessor.pkl")
-                PredictPipeline._model = load_object("artifacts/model.pkl")
+                # Get the absolute path to the artifacts folder
+                base_dir = os.path.dirname(os.path.abspath(__file__))  # location of this file
+                preprocessor_path = os.path.join(base_dir, "..", "..", "artifacts", "preprocessor.pkl")
+                model_path = os.path.join(base_dir, "..", "..", "artifacts", "model.pkl")
+
+                print(f"Loading preprocessor from: {preprocessor_path}")
+                print(f"Loading model from: {model_path}")
+
+                PredictPipeline._preprocessor = load_object(preprocessor_path)
+                PredictPipeline._model = load_object(model_path)
                 print("Model and preprocessor loaded successfully")
         except Exception as e:
             raise CustomException(e, sys)
