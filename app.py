@@ -23,15 +23,7 @@ async def index(request: Request):
     )
 
 
-@app.get("/predictdata", response_class=HTMLResponse)
-async def predict_data_get(request: Request):
-    return templates.TemplateResponse(
-        "home.html",
-        {"request": request}
-    )
-
-
-@app.post("/predictdata", response_class=HTMLResponse)
+@app.post("/", response_class=HTMLResponse)
 async def predict_data_post(
     request: Request,
     gender: str = Form(...),
@@ -62,7 +54,7 @@ async def predict_data_post(
     print("After Prediction")
 
     return templates.TemplateResponse(
-        "home.html",
+        "index.html",
         {
             "request": request,
             "results": results[0]
