@@ -1,3 +1,4 @@
+# copy of app.py just for the deployment purpose on elastic beanstalk
 import sys
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
@@ -70,4 +71,4 @@ async def predict_data_post(
     )
     
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0")
