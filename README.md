@@ -83,23 +83,39 @@ notebook/                # Experiments and EDA notebooks
 
 src/
 │
+
 ├── components/
+
 │   ├── data_ingestion.py        # Data loading and splitting
+
 │   ├── data_transformation.py   # Feature engineering & preprocessing
+
 │   └── model_trainer.py         # Model training & tuning
+
 │
+
 ├── pipelines/
+
 │   ├── training_pipeline.py     # End-to-end training pipeline
+
 │   └── prediction_pipeline.py   # Inference pipeline
+
 │
+
 ├── exception.py          # Custom exception handling
+
 ├── logger.py             # Logging configuration
+
 └── utils.py              # Common utility functions
 
 templates/               # HTML templates for UI
+
 app.py                   # Application entry point
+
 requirements.txt         # Dependencies
+
 setup.py                 # Package setup
+
 README.md                # Project documentation
 
 # Tech Stack
